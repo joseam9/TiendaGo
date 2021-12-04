@@ -23,6 +23,7 @@ public class TiendaGoApplication {
 					.paths(PathSelectors.any())
 					.build();
 	}
+	
 
 
 	public static void main(String[] args) {

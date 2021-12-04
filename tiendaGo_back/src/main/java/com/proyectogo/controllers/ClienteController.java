@@ -1,5 +1,4 @@
 package com.proyectogo.controllers;
-
 import java.util.List;
 import java.util.Optional;
 
@@ -13,43 +12,45 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyectogo.models.ProductoDTO;
-import com.proyectogo.repositories.IProductoDAO;
+
+import com.proyectogo.models.ClienteDTO;
+import com.proyectogo.repositories.ClienteDAO;
+
+import org.springframework.web.bind.annotation.RequestMethod;
 
 @RestController
-@CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
-@RequestMapping("/api/productos")
-public class ProductoController {
-	
+@CrossOrigin(origins = "*",methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
+@RequestMapping("/api/clientes")
+public class ClienteController  {
 	@Autowired
-	private IProductoDAO repository;
+	private ClienteDAO repository;
 	
-	@PostMapping("/producto")
-	public ProductoDTO create(@Validated @RequestBody ProductoDTO p) {
+	@PostMapping ("/cliente")
+	public ClienteDTO create (@Validated @RequestBody ClienteDTO p) {
 		return repository.insert(p);
 	}
 	
 	@GetMapping("/")
-	public List<ProductoDTO> readAll(){
+	public List<ClienteDTO> readAll(){
 		return repository.findAll();
 	}
 	
-	@PutMapping("/producto/{id}")
-	public ProductoDTO update(@PathVariable String id, @Validated @RequestBody ProductoDTO p) {
-		return repository.save(p);	
+	@GetMapping("/cliente/{id}")
+	public Optional<ClienteDTO>readId(@PathVariable String id) {
+		return repository.findById(id);
 	}
 	
-	@GetMapping("/producto/{id}")
-    public Optional<ProductoDTO> readId(@PathVariable String id){
-        return repository.findById(id);
-    }
+	@PutMapping("/cliente/{id}")
+	public ClienteDTO update(@PathVariable String id,@Validated @RequestBody ClienteDTO p) {
+		return repository.save(p);
+	}
 	
-	@DeleteMapping("/producto/{id}")
+	@DeleteMapping("/cliente/{id}")
 	public void delete(@PathVariable String id) {
 		repository.deleteById(id);
 	}
-
 }
+
+

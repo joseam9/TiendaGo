@@ -16,39 +16,39 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.proyectogo.models.ProductoDTO;
-import com.proyectogo.repositories.IProductoDAO;
+import com.proyectogo.models.VentaDTO;
+import com.proyectogo.repositories.IVentaDAO;
 
 @RestController
-@CrossOrigin(origins = "*", methods = {RequestMethod.POST, RequestMethod.GET, RequestMethod.PUT, RequestMethod.DELETE})
-@RequestMapping("/api/productos")
-public class ProductoController {
+@CrossOrigin(origins = "*", methods = {RequestMethod.POST,RequestMethod.GET,RequestMethod.PUT,RequestMethod.DELETE})
+@RequestMapping("/api/ventas")
+public class VentaController {
 	
 	@Autowired
-	private IProductoDAO repository;
+	private IVentaDAO repository;
 	
-	@PostMapping("/producto")
-	public ProductoDTO create(@Validated @RequestBody ProductoDTO p) {
-		return repository.insert(p);
+	@PostMapping("/venta")
+	public VentaDTO create (@Validated @RequestBody VentaDTO v) {
+		return repository.insert(v);
 	}
 	
 	@GetMapping("/")
-	public List<ProductoDTO> readAll(){
+	public List<VentaDTO> readAll(){
 		return repository.findAll();
 	}
 	
-	@PutMapping("/producto/{id}")
-	public ProductoDTO update(@PathVariable String id, @Validated @RequestBody ProductoDTO p) {
-		return repository.save(p);	
+	@GetMapping("/venta/{id}")
+	public Optional<VentaDTO> readId (@PathVariable String id){
+		return repository.findById(id);
 	}
 	
-	@GetMapping("/producto/{id}")
-    public Optional<ProductoDTO> readId(@PathVariable String id){
-        return repository.findById(id);
-    }
+	@PutMapping("/venta/{id}")
+	public VentaDTO update (@PathVariable String id, @Validated @RequestBody VentaDTO v) {
+		return repository.save(v);
+	}
 	
-	@DeleteMapping("/producto/{id}")
-	public void delete(@PathVariable String id) {
+	@DeleteMapping("/venta/{id}")
+	public void delete (@PathVariable String id) {
 		repository.deleteById(id);
 	}
 

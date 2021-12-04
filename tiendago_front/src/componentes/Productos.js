@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import swal from "sweetalert";
+import {Navigate} from "react-router-dom";
 
 class Productos extends Component{
 
@@ -35,31 +36,38 @@ class Productos extends Component{
                     "El artículo ha sido borrado correctamente",
                     "success"
                 )
-                window.location.reload(true);
+                
             })
     }
 
     render(){
+
+        if (this.state.status === "deleted"){
+            return <Navigate to = "/ruta1" />
+        } 
         
         return(
             
-            <div>
-                <h1>Productos</h1>
+            <div >
+                <h1>Gran Variedad de Productos</h1>
 
                 <Link to = "/agregarProducto">Crear Producto</Link>
 
                 <table>
                     <thead>
-                        <th>Código Producto</th>
-                        <th>Nombre del Producto</th>
+                      
+                        <th>Código </th>
+                        <th> Nombre del Producto</th>
                         <th>Nit Proveedor</th>
                         <th>IVA</th>
                         <th>Precio Compra</th>
+                        <th>Precio Venta</th>
                         <th>Acciones</th>
                     </thead>
                     <tbody>
                         {
                             this.state.productos.map((producto)=>{
+                                
                                 return(
                                     <React.Fragment>
                                         <tr>
