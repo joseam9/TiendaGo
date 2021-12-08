@@ -74,8 +74,8 @@ class Productos extends Component{
                                             <td>{producto.codigo_producto}</td>
                                             <td>{producto.nombre_producto}</td>
                                             <td>{producto.nitproveedor}</td>
-                                            <td>{producto.precio_compra}</td>
                                             <td>{producto.iva_compra}</td>
+                                            <td>{producto.precio_compra}</td>
                                             <td>{producto.precio_venta}</td>
                                             <td>
                                                 <Link to = {"/editarProducto/"+producto._id}>Editar</Link>
