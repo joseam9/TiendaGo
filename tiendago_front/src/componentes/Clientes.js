@@ -2,6 +2,8 @@ import React, { Component } from "react";
 import axios from "axios";
 import {Link} from "react-router-dom";
 import swal from "sweetalert";
+import {Navigate} from "react-router-dom";
+
 class Clientes extends Component{
     state= {
         clientes:[]
@@ -25,7 +27,7 @@ class Clientes extends Component{
             this.setState({
                 status:"deleted"
             });
-            window.location.reload(true);
+            
             swal(
                 "Cliente Borrado",
                 "El cliente ha sido borrado correctamente",
@@ -37,6 +39,11 @@ class Clientes extends Component{
         })
     }
     render (){
+
+        if (this.state.status === "deleted"){
+            return <Navigate to = "/ruta1" />
+        }
+
         return(
             <div>
                 <h1>Nuestros Clientes</h1>

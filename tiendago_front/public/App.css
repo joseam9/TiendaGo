@@ -54,3 +54,8 @@ nav ul li a{
     transform: rotate(360deg);
   }
 }
+
+.smallButton{
+  width: 100px;
+
+}
