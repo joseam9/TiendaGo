@@ -24,6 +24,8 @@ class Ventas extends Component{
     valorUnitarioP3 =React.createRef();
     cantidadP3 =React.createRef();
 
+    iva1=React.createRef();
+
     valorIvaP1=React.createRef();
     valorIvaP2=React.createRef();
     valorIvaP3=React.createRef();
@@ -49,6 +51,8 @@ class Ventas extends Component{
         producto2:[],
         producto3:[],
 
+        ventas:[],
+
         iva1:null,
         iva2:null,
         iva3:null,
@@ -61,6 +65,8 @@ class Ventas extends Component{
         selectedOption: null,
 
         customerid:null,
+
+        cantidadP1:null,
          
         valorIvaP1:null,
         valorIvaP2:null,
@@ -72,7 +78,7 @@ class Ventas extends Component{
         detalle_venta:[],
         
         clientecedula:null,
-        consecutivo:1,
+        consecutivo:null,
         totalventa:null,
         ivaventa:null,
         totalventaconiva:null                
@@ -83,7 +89,7 @@ class Ventas extends Component{
     componentWillMount(){
         this.getClientes();
         this.getProductos();
-        
+        this.getVentas();
     }
   
     
@@ -155,6 +161,23 @@ class Ventas extends Component{
                   })
                 });
     }
+
+    getVentas = () => {
+        axios.get("http://localhost:8081/api/ventas/")
+                .then(res =>{
+                   // console.log(res.data);
+                    this.setState({
+                        consecutivo:res.data.length,                        
+                    })                    
+                });
+                
+                
+                
+                
+    }
+
+    
+
 
     
 
@@ -228,9 +251,9 @@ class Ventas extends Component{
         this.getCliente(customer);
     }
 
-    handleChangeP1 = () => {
-        var product1 = this.selectP1.current.value;        
-        this.getProducto(product1);
+    handleChangeP1 = () => {        
+        var product1 = this.selectP1.current.value;           
+        this.getProducto(product1);        
     }
 
     handleChangeP2 = () => {
@@ -347,12 +370,13 @@ class Ventas extends Component{
                     </tbody>
                 </table>
 
-                <table onChange={this.operacion} >
+                <table /*onChange={this.operacion}*/ >
                     <thead>
                         <th>Producto</th>
                         <th>Cantidad</th>
                         <th>Valor Unitario</th>                        
                         <th>Valor Total (Antes de IVA)</th>
+                        
                         <th>Valor IVA</th>
                     </thead>
 
@@ -372,14 +396,14 @@ class Ventas extends Component{
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="cantidadProducto1"  ref={this.cantidadP1} defaultValue="0" />
+                                <input type="text" name="cantidadProducto1"  ref={this.cantidadP1} defaultValue="0"/>
                             </td>
                             <td>
                                 <input type="text" name="valorUnitarioProducto1" ref={this.valorUnitarioP1} defaultValue={this.state.producto.precio_venta} readonly="readonly"  />                            
                             </td>                            
                             <td>
                                 <input type="text" name="valorTotalProducto1" ref={this.valorTotalP1} defaultValue={this.state.valorTotalP1} readonly="readonly"/>
-                            </td>
+                            </td>                            
                             <td>
                                 <input type="text" name="valorIvaProducto1" ref={this.valorIvaP1} defaultValue={this.state.valorIvaP1} readonly="readonly"/>
                             </td>
@@ -400,7 +424,7 @@ class Ventas extends Component{
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="cantidadProducto2" ref={this.cantidadP2}  defaultValue="0"/>
+                                <input type="text" name="cantidadProducto2" ref={this.cantidadP2}  defaultValue="0" />
                             </td>
                             <td>
                                 <input type="text" name="valorUnitarioProducto2" ref={this.valorUnitarioP2}  defaultValue={this.state.producto2.precio_venta} readonly="readonly" />                            
@@ -457,8 +481,8 @@ class Ventas extends Component{
 
                         <tr>
                             <td></td>
-                            <td></td>
-                            <td><button onClick={this.guardarVenta}>Confirmar</button></td>
+                            <td><button onClick={this.operacion}>Calcular</button></td>
+                            <td><button onClick={this.guardarVenta}>Guardar Venta</button></td>
                             <td>Total con IVA<input type="text" name="totalConIVA" ref={this.totalventaconiva} defaultValue={this.state.totalventaconiva} readonly="readonly"/></td>
                         </tr>
                     </tbody>

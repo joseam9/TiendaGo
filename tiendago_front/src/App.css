@@ -84,7 +84,7 @@ input{
   align-items:right;
   position:center;
   border-radius: 0in;
-  width: 300px;
+  width: 200px;
 }
 
 
@@ -107,3 +107,4 @@ div button{
   right: 0px;
   color:black;
 }
+
