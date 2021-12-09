@@ -14,7 +14,7 @@ class Ventas extends Component{
     customerid=React.createRef();   
 
     selectCiudad=React.createRef();
-    temp=React.createRef();
+    selectCedula=React.createRef();
     selectP1=React.createRef();   
     selectP2=React.createRef();
     selectP3=React.createRef();
@@ -246,20 +246,16 @@ class Ventas extends Component{
                     )
                 }
             })
-    }
-
-    handleChange = (selectedOption) => {
-        this.setState({ selectedOption });
-        console.log(`Option selected:`, selectedOption);  
-        //alert(this.temp.current.value);
-        var customer=this.temp.current.value;
-        this.setState({customerid:customer});
-        this.getCliente(customer);
-    }
+    }    
 
     handleChangeCiudad = () =>{
         var city = this.selectCiudad.current.value;
         this.setState({ciudad:city});       
+    }
+
+    handleChangeCedula = () => {
+        var customer=this.selectCedula.current.value;        
+        this.getCliente(customer);
     }
 
     handleChangeP1 = () => {        
@@ -362,7 +358,7 @@ class Ventas extends Component{
                     <tbody>
                         <tr>
                             <td>
-                                <select name = "cedula" onChange={this.handleChange} ref={this.temp}>
+                                <select name = "cedula" onChange={this.handleChangeCedula} ref={this.selectCedula}>
                                 {
                                     this.state.clientes.map((clientee)=>{
                                         return(
