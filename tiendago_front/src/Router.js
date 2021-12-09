@@ -8,6 +8,8 @@ import Clientes from "./componentes/Clientes";
 import AgregarCliente from "./componentes/AgregarCliente";
 import EditarCliente from "./componentes/EditarCliente";
 import Ventas from "./componentes/Ventas";
+import RetornoVentas from "./componentes/RetornoVentas";
+import RetornoClientes from "./componentes/RetornoClientes";
 class Router extends Component{
     render(){
         return(
@@ -43,6 +45,8 @@ class Router extends Component{
                     <Route path = "/agregarCliente" element={<AgregarCliente/>}/>
                     <Route path = "/editarCliente/:id" element={<EditarCliente/>}/>
                     <Route path = "/ventas" element={<Ventas/>}/>
+                    <Route path = "/retornoVentas" element={<RetornoVentas/>}/>
+                    <Route path = "/retornoClientes" element={<RetornoClientes/>}/>
                 </Routes>
             </BrowserRouter>
         );

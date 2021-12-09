@@ -41,7 +41,7 @@ class Clientes extends Component{
     render (){
 
         if (this.state.status === "deleted"){
-            return <Navigate to = "/ruta1" />
+            return <Navigate to = "/retornoClientes" />
         }
 
         return(

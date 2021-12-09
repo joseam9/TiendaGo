@@ -2,6 +2,7 @@ import React, {Component} from "react";
 import axios from "axios";
 import { Link } from "react-router-dom";
 import swal from "sweetalert";
+import {Navigate} from "react-router-dom";
 
 
 
@@ -12,6 +13,7 @@ class Ventas extends Component{
     cedula=React.createRef();    
     customerid=React.createRef();   
 
+    selectCiudad=React.createRef();
     temp=React.createRef();
     selectP1=React.createRef();   
     selectP2=React.createRef();
@@ -43,6 +45,8 @@ class Ventas extends Component{
     detalle_venta=React.createRef();
 
     state={
+        ciudad:null,
+
         clientes:[],
         cliente:[],
 
@@ -167,7 +171,7 @@ class Ventas extends Component{
                 .then(res =>{
                    // console.log(res.data);
                     this.setState({
-                        consecutivo:res.data.length,                        
+                        consecutivo:res.data.length+1,                        
                     })                    
                 });
                 
@@ -209,14 +213,16 @@ class Ventas extends Component{
 
                 
 
-        //this.setState({
+        this.setState({
           //  detalle_venta:detalleventa1
-        //})
+          status:"saved"
+        })
         console.log(detalleventa1)
 
         e.preventDefault();
         var venta={            
-            cedula_cliente:Number(this.clientecedula.current.value),                        
+            cedula_cliente:Number(this.clientecedula.current.value), 
+            ciudad_venta:this.state.ciudad,                       
             codigo_venta:Number(this.consecutivo.current.value), 
             detalle_venta:[detalleventa1,detalleventa2,detalleventa3],
             iva_venta:this.ivaventa.current.value,
@@ -249,6 +255,11 @@ class Ventas extends Component{
         var customer=this.temp.current.value;
         this.setState({customerid:customer});
         this.getCliente(customer);
+    }
+
+    handleChangeCiudad = () =>{
+        var city = this.selectCiudad.current.value;
+        this.setState({ciudad:city});       
     }
 
     handleChangeP1 = () => {        
@@ -323,11 +334,21 @@ class Ventas extends Component{
     render (){
 
         const { selectedOption } = this.state;
+
+        if (this.state.status === "saved"){
+            return <Navigate to = "/retornoVentas" />
+        } 
         
         return(
             <div>
                 <h1>Modulo Ventas</h1>
-                <p></p>
+                <p>Seleccione ciudad:</p>
+                <select name = "ciudad" onChange={this.handleChangeCiudad} ref={this.selectCiudad}>
+                    <option value = "-">-</option>
+                    <option value = "Bogota">Bogotá</option>
+                    <option value = "Cali">Cali</option>
+                    <option value = "Medellin">Medellín</option>
+                </select>
 
                 <table>
                     <thead>
@@ -396,7 +417,7 @@ class Ventas extends Component{
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="cantidadProducto1"  ref={this.cantidadP1} defaultValue="0"/>
+                                <input type="number" name="cantidadProducto1"  ref={this.cantidadP1} defaultValue="0"/>
                             </td>
                             <td>
                                 <input type="text" name="valorUnitarioProducto1" ref={this.valorUnitarioP1} defaultValue={this.state.producto.precio_venta} readonly="readonly"  />                            
@@ -424,7 +445,7 @@ class Ventas extends Component{
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="cantidadProducto2" ref={this.cantidadP2}  defaultValue="0" />
+                                <input type="number" name="cantidadProducto2" ref={this.cantidadP2}  defaultValue="0" />
                             </td>
                             <td>
                                 <input type="text" name="valorUnitarioProducto2" ref={this.valorUnitarioP2}  defaultValue={this.state.producto2.precio_venta} readonly="readonly" />                            
@@ -452,7 +473,7 @@ class Ventas extends Component{
                                 </select>
                             </td>
                             <td>
-                                <input type="text" name="cantidadProducto3"  ref={this.cantidadP3} defaultValue="0"/>
+                                <input type="number" name="cantidadProducto3"  ref={this.cantidadP3} defaultValue="0"/>
                             </td>
                             <td>
                                 <input type="text" name="valorUnitarioProducto3"  ref={this.valorUnitarioP3}  defaultValue={this.state.producto3.precio_venta} readonly="readonly"/>                            
@@ -481,7 +502,7 @@ class Ventas extends Component{
 
                         <tr>
                             <td></td>
-                            <td><button onClick={this.operacion}>Calcular</button></td>
+                            <td><button onClick={this.operacion}>Calcular Venta</button></td>
                             <td><button onClick={this.guardarVenta}>Guardar Venta</button></td>
                             <td>Total con IVA<input type="text" name="totalConIVA" ref={this.totalventaconiva} defaultValue={this.state.totalventaconiva} readonly="readonly"/></td>
                         </tr>

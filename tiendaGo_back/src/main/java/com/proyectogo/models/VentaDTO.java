@@ -16,6 +16,7 @@ public class VentaDTO {
 	private Double iva_venta;
 	private Double total_venta;
 	private Double valor_venta;
+	private String ciudad_venta;
 	public String get_id() {
 		return _id;
 	}
@@ -58,6 +59,13 @@ public class VentaDTO {
 	public void setValor_venta(Double valor_venta) {
 		this.valor_venta = valor_venta;
 	}
+	public String getCiudad_venta() {
+		return ciudad_venta;
+	}
+	public void setCiudad_venta(String ciudad_venta) {
+		this.ciudad_venta = ciudad_venta;
+	}
+	
 	
 	
 
